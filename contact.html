@@ -96,6 +96,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(245,242,237,
 .booking-card-action{display:inline-flex;align-items:center;justify-content:center;background:var(--green);color:#F5F2ED;font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;border-radius:3px;padding:12px 16px;}
 .booking-note{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:28px;}
 .booking-note strong{color:var(--dark);font-weight:600;}
+.payment-callout{display:flex;justify-content:space-between;gap:22px;align-items:center;background:var(--ivory);border:1.5px solid #D0CBC2;border-radius:4px;padding:22px;margin-bottom:36px;}
+.payment-callout strong{display:block;font-family:var(--serif);font-size:20px;line-height:1.2;color:var(--dark);margin-bottom:6px;}
+.payment-callout p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+.payment-link{display:inline-flex;align-items:center;justify-content:center;background:var(--green);color:#F5F2ED;font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;border-radius:3px;padding:12px 16px;white-space:nowrap;}
+.payment-link:hover{background:#415B39;color:#F5F2ED;}
 
 /* RIGHT: form */
 .contact-form{
@@ -159,6 +164,7 @@ footer{background:var(--dark);padding:48px 0 32px;}
   .nav-inner,.contact-hero-inner,.contact-inner,.footer-inner{padding:0 24px;}
   .contact-inner{grid-template-columns:1fr;gap:48px;}
   .booking-card-title{flex-direction:column;gap:4px;}
+  .payment-callout{flex-direction:column;align-items:flex-start;}
   .form-row{grid-template-columns:1fr;}
   .contact-form{padding:32px 24px;}
   .footer-top{flex-direction:column;gap:24px;align-items:flex-start;}
@@ -250,6 +256,13 @@ footer{background:var(--dark);padding:48px 0 32px;}
         </a>
       </div>
       <p class="booking-note"><strong>Scheduling:</strong> free calls are available until 2 PM Thursday through Saturday. Walk &amp; Talks are available 9 AM to noon Monday through Saturday, and 9 AM to 5 PM Sunday.</p>
+      <div class="payment-callout">
+        <div>
+          <strong>Walk &amp; Talk payment</strong>
+          <p>After booking your time, use Shopify to reserve your session.</p>
+        </div>
+        <a class="payment-link" href="https://jensonnelson.com/products/shelf-esteem-walk-talk" target="_blank" rel="noopener">Pay $150</a>
+      </div>
       <div class="form-heading">Tell us about your space</div>
       <form action="https://formsubmit.co/shelfesteemorganizing@gmail.com" method="POST">
         <input type="hidden" name="_subject" value="New Shelf Esteem Inquiry">
