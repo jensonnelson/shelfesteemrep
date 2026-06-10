@@ -56,19 +56,26 @@ nav{
 .nav-logo img{height:42px;width:auto;}
 .nav-links{display:flex;align-items:center;gap:36px;list-style:none;}
 .nav-links a{
+  position:relative;
   font-size:11px;font-weight:500;letter-spacing:0.20em;
   text-transform:uppercase;color:var(--muted);transition:color .15s;
 }
+.nav-links a::after{
+  content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;
+  background:var(--green);transform:scaleX(0);transform-origin:left;
+  transition:transform .28s ease;
+}
 .nav-links a:hover{color:var(--dark);}
+.nav-links a:hover::after{transform:scaleX(1);}
 .nav-book{
   display:inline-flex;align-items:center;justify-content:center;
   white-space:nowrap;background:var(--green);color:#F5F2ED;
   font-family:var(--sans);font-size:11px;font-weight:500;
   letter-spacing:0.16em;text-transform:uppercase;
-  padding:13px 22px;border-radius:3px;transition:background .2s;
+  padding:13px 22px;border-radius:3px;transition:background .2s,transform .2s,box-shadow .2s;
   border:none;cursor:pointer;
 }
-.nav-book:hover{background:var(--green-dk);}
+.nav-book:hover{background:var(--green-dk);transform:translateY(-2px);box-shadow:0 12px 24px rgba(80,110,72,0.18);}
 .nav-toggle{display:none;align-items:center;justify-content:center;width:42px;height:42px;border:1px solid #D8D4CC;border-radius:3px;background:transparent;color:var(--dark);cursor:pointer;}
 .nav-toggle span:not(.sr-only){display:block;width:18px;height:1.5px;background:currentColor;margin:2.5px 0;transition:transform .2s,opacity .2s;}
 .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
@@ -256,7 +263,20 @@ footer{
 .founder-photo-placeholder{width:100%;aspect-ratio:1/1;background:var(--ivory2);border:1.5px dashed #C8C4BC;border-radius:4px;}
 .founder-caption{font-family:var(--serif);font-size:20px;color:var(--dark);line-height:1.35;margin-top:16px;margin-bottom:0;}
 .about-page-cta{max-width:var(--max);margin:72px auto 0;padding:0 40px;}
-.about-page-cta a{display:inline-flex;align-items:center;justify-content:center;background:var(--green);color:#F5F2ED;font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;padding:15px 28px;border-radius:3px;}
+.about-page-cta a{display:inline-flex;align-items:center;justify-content:center;background:var(--green);color:#F5F2ED;font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;padding:15px 28px;border-radius:3px;transition:background .2s,transform .2s,box-shadow .2s;}
+.about-page-cta a:hover{background:var(--green-dk);transform:translateY(-2px);box-shadow:0 14px 24px rgba(80,110,72,0.18);}
+@keyframes shelfRise{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.about-page .about-label,.about-page h1{animation:shelfRise .72s cubic-bezier(.22,1,.36,1) both;}
+.about-page h1{animation-delay:.08s;}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .72s ease,transform .72s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal.delay-1{transition-delay:.08s;}
+.reveal.delay-2{transition-delay:.16s;}
+.reveal.delay-3{transition-delay:.24s;}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important;}
+  .reveal{opacity:1;transform:none;}
+}
 @media(max-width:900px){
   .about-story-inner{grid-template-columns:1fr;gap:44px;padding:0 24px;}
   .founder-card{position:static;max-width:420px;}
@@ -350,6 +370,27 @@ footer{
   document.querySelectorAll('.nav-links a').forEach(function(link){
     link.addEventListener('click', closeMenu);
   });
+})();
+
+(function(){
+  var targets = document.querySelectorAll('.about-page p,.founder-card,.about-page-cta,footer');
+  targets.forEach(function(target, index){
+    target.classList.add('reveal');
+    target.classList.add('delay-' + (index % 4));
+  });
+  if(!('IntersectionObserver' in window)){
+    targets.forEach(function(target){ target.classList.add('visible'); });
+    return;
+  }
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  targets.forEach(function(target){ observer.observe(target); });
 })();
 </script>
 </body>
